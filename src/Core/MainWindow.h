@@ -38,7 +38,12 @@ public:
 
 private:
     PrincipalWidget *m_principalWidget = nullptr;
+    QMenuBar *m_menuBar = nullptr;
+    QAction *saveAction = nullptr;
 
+public slots:
+
+signals:
 
 };
 

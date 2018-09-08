@@ -27,7 +27,6 @@
 
 #include <QWidget>
 #include <QLayout>
-#include <QMenu>
 
 class Editor;
 
@@ -36,10 +35,12 @@ class PrincipalWidget : public QWidget
     Q_OBJECT
 public:
     explicit PrincipalWidget(QWidget *parent = nullptr);
+    void saveFile(bool test);
+
+private:
     Editor *m_editor = nullptr;
     QHBoxLayout *m_layout = nullptr;
-    QMenu *m_menu = nullptr;
-    void saveFile();
+
 
 signals:
 

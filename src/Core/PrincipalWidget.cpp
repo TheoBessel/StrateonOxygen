@@ -31,16 +31,14 @@ PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
 {
     m_layout = new QHBoxLayout(this);
     m_editor = new Editor(this);
-    m_menu = new QMenu(this);
-    m_menu->addAction("File");
 
     setLayout(m_layout);
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->addWidget(m_editor);
 }
 
-void PrincipalWidget::saveFile()
-{
+void PrincipalWidget::saveFile(bool test)
+{ if (test == true){}
     QString EditorContent = m_editor->toPlainText();
     QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "Sans titre 1.txt");
     QFile File(FileName);
@@ -51,5 +49,6 @@ void PrincipalWidget::saveFile()
         setWindowTitle("Strateon - " + FileName);
 
     }
+
 }
 

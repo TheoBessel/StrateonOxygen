@@ -24,10 +24,16 @@
 
 #include "MainWindow.h"
 #include "PrincipalWidget.h"
+#include <QMenuBar>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    m_menuBar = new QMenuBar(this);
+    QMenu *Edit = m_menuBar->addMenu("File");
+    saveAction = Edit->addAction("SaveFile");
+
     m_principalWidget = new PrincipalWidget(this);
+    connect(saveAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::saveFile);
     setCentralWidget(m_principalWidget);
 }
 
