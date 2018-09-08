@@ -22,10 +22,13 @@
     * SOFTWARE.
 */
 
-#include "mainwindow.h"
 
-mainwindow::mainwindow(QWidget *parent) : QMainWindow(parent)
+#include "mainwindow.h"
+#include "principalwidget.h"
+
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    PrincipalWidget = new principalwidget(this);
-    this->setCentralWidget(PrincipalWidget);
+    m_principalWidget = new PrincipalWidget(this);
+    setCentralWidget(m_principalWidget);
 }
+

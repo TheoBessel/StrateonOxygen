@@ -29,7 +29,7 @@
 
 Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
 {
-    LineNumber = new class LineNumber(this);
+    LineNumber = new LineNumberClass(this);
 
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(UpdateLineNumberWidth(int)));
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(UpdateLineNumber(QRect,int)));
@@ -131,3 +131,4 @@ void Editor::lineNumberAreaPaintEvent(QPaintEvent *event)
         ++blockNumber;
     }
 }
+

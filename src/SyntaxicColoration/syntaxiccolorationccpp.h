@@ -52,7 +52,7 @@ private:
     QRegularExpression commentStartExpression;
     QRegularExpression commentEndExpression;
 
-    QTextCharFormat NormalFormat;
+    QTextCharFormat normalFormat;
     QTextCharFormat keywordFormat;
     QTextCharFormat includeFormat;
     QTextCharFormat classFormat;

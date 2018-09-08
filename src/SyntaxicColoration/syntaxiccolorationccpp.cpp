@@ -29,9 +29,9 @@ Highlighter::Highlighter(QTextDocument *parent)
 {
     HighlightingRule rule;
 
-    NormalFormat.setForeground(Qt::white);
+    normalFormat.setForeground(Qt::white);
     rule.pattern = QRegularExpression("[[:print:]]");
-    rule.format = NormalFormat;
+    rule.format = normalFormat;
     highlightingRules.append(rule);
 
     keywordFormat.setForeground(QColor(68,130,187));
@@ -130,7 +130,7 @@ void Highlighter::highlightBlock(const QString &text)
             commentLength = text.length() - startIndex;
         } else {
             commentLength = endIndex - startIndex
-                            + match.capturedLength();
+                    + match.capturedLength();
         }
         setFormat(startIndex, commentLength, multiLineCommentFormat);
         startIndex = text.indexOf(commentStartExpression, startIndex + commentLength);

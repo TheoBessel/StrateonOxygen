@@ -24,14 +24,34 @@
 
 #include "principalwidget.h"
 #include <QLayout>
+#include <QFileDialog>
+#include <QTextEdit>
+#include <QTextStream>
+#include <QMenu>
 
-principalwidget::principalwidget(QWidget *parent) : QWidget(parent)
+PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
 {
-    layout = new QHBoxLayout(this);
-    editor = new Editor(this);
+    m_layout = new QHBoxLayout(this);
+    m_editor = new Editor(this);
+    m_menu = new QMenu(this);
+    m_menu->addAction("File");
 
-    this->setLayout(layout);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(editor);
-
+    setLayout(m_layout);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+    m_layout->addWidget(m_editor);
 }
+
+void PrincipalWidget::saveFile()
+{
+    QString EditorContent = m_editor->toPlainText();
+    QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "Sans titre 1.txt");
+    QFile File(FileName);
+    if (File.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&File);
+        out << EditorContent;
+        setWindowTitle("Strateon - " + FileName);
+
+    }
+}
+

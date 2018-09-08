@@ -29,7 +29,7 @@ int main(int argv, char **args)
 {
     QApplication app(argv, args);
 
-    mainwindow window;
+    MainWindow window;
     window.setWindowTitle(QObject::tr("Strateon"));
     window.show();
 

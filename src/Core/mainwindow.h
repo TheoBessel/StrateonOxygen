@@ -28,12 +28,13 @@
 #include <QMainWindow>
 #include "principalwidget.h"
 
-class mainwindow : public QMainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
-    explicit mainwindow(QWidget *parent = nullptr);
-    principalwidget *PrincipalWidget;
+    explicit MainWindow(QWidget *parent = nullptr);
+    PrincipalWidget *m_principalWidget;
 
 signals:
 

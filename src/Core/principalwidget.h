@@ -29,13 +29,15 @@
 #include "Editor/editor.h"
 #include <QLayout>
 
-class principalwidget : public QWidget
+class PrincipalWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit principalwidget(QWidget *parent = nullptr);
-    Editor *editor;
-    QHBoxLayout *layout;
+    explicit PrincipalWidget(QWidget *parent = nullptr);
+    Editor *m_editor = nullptr;
+    QHBoxLayout *m_layout = nullptr;
+    QMenu *m_menu = nullptr;
+    void saveFile();
 
 signals:
 

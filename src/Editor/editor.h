@@ -34,8 +34,9 @@ class QResizeEvent;
 class QSize;
 class QWidget;
 
-class LineNumber;
+class LineNumberClass;
 
+/* Editor Class (with Line number updating and Save/Open File functions)*/
 
 class Editor : public QPlainTextEdit
 {
@@ -51,20 +52,23 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 private slots:
+    /*Line number updating*/
     void UpdateLineNumberWidth(int newBlockCount);
     void HighlightCurrentLine();
     void UpdateLineNumber(const QRect &, int);
+
 
 private:
     QWidget *LineNumber;
     Highlighter *highlighter;
 };
 
+/* Line number Class */
 
-class LineNumber : public QWidget
+class LineNumberClass : public QWidget
 {
 public:
-    LineNumber(Editor *editor) : QWidget(editor) {
+    LineNumberClass(Editor *editor) : QWidget(editor) {
         Editor = editor;
     }
 
