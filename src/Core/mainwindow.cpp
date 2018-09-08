@@ -22,7 +22,6 @@
     * SOFTWARE.
 */
 
-
 #include "mainwindow.h"
 #include "principalwidget.h"
 

@@ -22,7 +22,7 @@
     * SOFTWARE.
 */
 
-#include <QtWidgets>
+#include <QApplication>
 #include "Core/mainwindow.h"
 
 int main(int argv, char **args)

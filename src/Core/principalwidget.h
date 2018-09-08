@@ -26,8 +26,10 @@
 #define PRINCIPALWIDGET_H
 
 #include <QWidget>
-#include "Editor/editor.h"
 #include <QLayout>
+#include <QMenu>
+
+class Editor;
 
 class PrincipalWidget : public QWidget
 {

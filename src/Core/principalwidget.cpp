@@ -23,11 +23,9 @@
 */
 
 #include "principalwidget.h"
-#include <QLayout>
+#include "../Editor/editor.h"
 #include <QFileDialog>
-#include <QTextEdit>
 #include <QTextStream>
-#include <QMenu>
 
 PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
 {

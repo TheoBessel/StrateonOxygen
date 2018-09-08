@@ -26,7 +26,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "principalwidget.h"
+
+class PrincipalWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -34,11 +35,11 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    PrincipalWidget *m_principalWidget;
 
-signals:
+private:
+    PrincipalWidget *m_principalWidget = nullptr;
 
-public slots:
+
 };
 
 #endif // MAINWINDOW_H

@@ -26,9 +26,8 @@
 #define CODEEDITOR_H
 
 #include <QPlainTextEdit>
-#include <QObject>
-#include "../SyntaxicColoration/syntaxiccolorationccpp.h"
 
+class Highlighter;
 class QPaintEvent;
 class QResizeEvent;
 class QSize;
