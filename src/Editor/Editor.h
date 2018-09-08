@@ -22,16 +22,67 @@
     * SOFTWARE.
 */
 
-#include <QApplication>
-#include "Core/MainWindow.h"
+#ifndef EDITOR_H
+#define EDITOR_H
 
-int main(int argv, char **args)
+#include <QPlainTextEdit>
+
+class Highlighter;
+class QPaintEvent;
+class QResizeEvent;
+class QSize;
+class QWidget;
+
+class LineNumberClass;
+
+/* Editor Class (with Line number updating and Save/Open File functions)*/
+
+class Editor : public QPlainTextEdit
 {
-    QApplication app(argv, args);
+    Q_OBJECT
 
-    MainWindow window;
-    window.setWindowTitle(QObject::tr("Strateon"));
-    window.show();
+public:
+    Editor(QWidget *parent = 0);
 
-    return app.exec();
-}
+    void lineNumberAreaPaintEvent(QPaintEvent *event);
+    int LineNumberWidth();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
+private slots:
+    /*Line number updating*/
+    void UpdateLineNumberWidth(int newBlockCount);
+    void HighlightCurrentLine();
+    void UpdateLineNumber(const QRect &, int);
+
+
+private:
+    QWidget *LineNumber = nullptr;
+    Highlighter *highlighter = nullptr;
+};
+
+/* Line number Class */
+
+class LineNumberClass : public QWidget
+{
+public:
+    LineNumberClass(Editor *editor) : QWidget(editor) {
+        Editor = editor;
+    }
+
+    QSize sizeHint() const override {
+        return QSize(Editor->LineNumberWidth(), 0);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event) override {
+        Editor->lineNumberAreaPaintEvent(event);
+    }
+
+private:
+    Editor *Editor;
+};
+
+
+#endif

@@ -23,14 +23,14 @@
 QT += widgets
 
 HEADERS += \
-    Editor/editor.h \
-    Core/mainwindow.h \
-    Core/principalwidget.h \
-    SyntaxicColoration/syntaxiccolorationccpp.h
+    SyntaxicColoration/SynColoCCpp.h \
+    Editor/Editor.h \
+    Core/MainWindow.h \
+    Core/PrincipalWidget.h
 
 SOURCES += \
     main.cpp \
-    Editor/editor.cpp \
-    Core/mainwindow.cpp \
-    Core/principalwidget.cpp \
-    SyntaxicColoration/syntaxiccolorationccpp.cpp
+    SyntaxicColoration/SynColoCCpp.cpp \
+    Editor/Editor.cpp \
+    Core/MainWindow.cpp \
+    Core/PrincipalWidget.cpp

@@ -22,16 +22,12 @@
     * SOFTWARE.
 */
 
-#include <QApplication>
-#include "Core/MainWindow.h"
+#include "MainWindow.h"
+#include "PrincipalWidget.h"
 
-int main(int argv, char **args)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    QApplication app(argv, args);
-
-    MainWindow window;
-    window.setWindowTitle(QObject::tr("Strateon"));
-    window.show();
-
-    return app.exec();
+    m_principalWidget = new PrincipalWidget(this);
+    setCentralWidget(m_principalWidget);
 }
+

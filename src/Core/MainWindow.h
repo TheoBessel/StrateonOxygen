@@ -22,16 +22,24 @@
     * SOFTWARE.
 */
 
-#include <QApplication>
-#include "Core/MainWindow.h"
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-int main(int argv, char **args)
+#include <QMainWindow>
+
+class PrincipalWidget;
+
+class MainWindow : public QMainWindow
 {
-    QApplication app(argv, args);
+    Q_OBJECT
 
-    MainWindow window;
-    window.setWindowTitle(QObject::tr("Strateon"));
-    window.show();
+public:
+    explicit MainWindow(QWidget *parent = nullptr);
 
-    return app.exec();
-}
+private:
+    PrincipalWidget *m_principalWidget = nullptr;
+
+
+};
+
+#endif // MAINWINDOW_H

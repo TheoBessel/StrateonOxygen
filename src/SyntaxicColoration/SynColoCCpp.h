@@ -22,16 +22,46 @@
     * SOFTWARE.
 */
 
-#include <QApplication>
-#include "Core/MainWindow.h"
+#ifndef SYNCOLOCCPP_H
+#define SYNCOLOCCPP_H
 
-int main(int argv, char **args)
+#include <QSyntaxHighlighter>
+#include <QTextCharFormat>
+#include <QRegularExpression>
+
+class QTextDocument;
+
+class Highlighter : public QSyntaxHighlighter
 {
-    QApplication app(argv, args);
+    Q_OBJECT
 
-    MainWindow window;
-    window.setWindowTitle(QObject::tr("Strateon"));
-    window.show();
+public:
+    Highlighter(QTextDocument *parent = 0);
 
-    return app.exec();
-}
+protected:
+    void highlightBlock(const QString &text) override;
+
+private:
+    struct HighlightingRule
+    {
+        QRegularExpression pattern;
+        QTextCharFormat format;
+    };
+    QVector<HighlightingRule> highlightingRules;
+
+    QRegularExpression commentStartExpression;
+    QRegularExpression commentEndExpression;
+
+    QTextCharFormat normalFormat;
+    QTextCharFormat keywordFormat;
+    QTextCharFormat includeFormat;
+    QTextCharFormat classFormat;
+    QTextCharFormat singleLineCommentFormat;
+    QTextCharFormat multiLineCommentFormat;
+    QTextCharFormat quotationFormat;
+    QTextCharFormat functionFormat;
+    QTextCharFormat yoloCommentFormat;
+};
+
+
+#endif // SYNTAXICCOLORATION_H

@@ -22,16 +22,28 @@
     * SOFTWARE.
 */
 
-#include <QApplication>
-#include "Core/MainWindow.h"
+#ifndef PRINCIPALWIDGET_H
+#define PRINCIPALWIDGET_H
 
-int main(int argv, char **args)
+#include <QWidget>
+#include <QLayout>
+#include <QMenu>
+
+class Editor;
+
+class PrincipalWidget : public QWidget
 {
-    QApplication app(argv, args);
+    Q_OBJECT
+public:
+    explicit PrincipalWidget(QWidget *parent = nullptr);
+    Editor *m_editor = nullptr;
+    QHBoxLayout *m_layout = nullptr;
+    QMenu *m_menu = nullptr;
+    void saveFile();
 
-    MainWindow window;
-    window.setWindowTitle(QObject::tr("Strateon"));
-    window.show();
+signals:
 
-    return app.exec();
-}
+public slots:
+};
+
+#endif // PRINCIPALWIDGET_H
