@@ -41,10 +41,6 @@ private:
     Editor *m_editor = nullptr;
     QHBoxLayout *m_layout = nullptr;
 
-
-signals:
-
-public slots:
 };
 
 #endif // PRINCIPALWIDGET_H

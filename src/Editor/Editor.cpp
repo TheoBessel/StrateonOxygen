@@ -124,7 +124,6 @@ void Editor::lineNumberAreaPaintEvent(QPaintEvent *event)
             painter.drawText(0, top, LineNumber->width(), fontMetrics().height(),
                              Qt::AlignRight, number);
         }
-
         block = block.next();
         top = bottom;
         bottom = top + (int) blockBoundingRect(block).height();

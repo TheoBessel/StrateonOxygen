@@ -26,8 +26,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+
 
 class PrincipalWidget;
+class QCloseEvent;
 
 class MainWindow : public QMainWindow
 {
@@ -41,9 +44,8 @@ private:
     QMenuBar *m_menuBar = nullptr;
     QAction *saveAction = nullptr;
 
-public slots:
-
-signals:
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 };
 
