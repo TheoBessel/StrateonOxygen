@@ -24,6 +24,7 @@
 
 #include "MainWindow.h"
 #include "PrincipalWidget.h"
+#include "Editor/Editor.h"
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -41,20 +42,32 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-    int m_closeMessageBox = QMessageBox::warning(this, tr("My Application"),
-                                                 tr("The document has been modified.\n"
-                                                    "Do you want to save your changes?"),
-                                                 QMessageBox::Discard
-                                                 | QMessageBox::Cancel
-                                                 | QMessageBox::Save );
-    if (m_closeMessageBox == QMessageBox::Save) {
-        bool mainWindowDestructed = true;
-        m_principalWidget->saveFile(mainWindowDestructed);
-        event->accept();
+    QString trimmedEditor{m_principalWidget->editor->toPlainText()};
+    trimmedEditor.remove(" ");
+    trimmedEditor.remove("\n");
+    trimmedEditor.remove("\t");
+
+
+
+    if (!trimmedEditor.isEmpty()){
+        int m_closeMessageBox = QMessageBox::warning(this, tr("My Application"),
+                                                     tr("The document has been modified.\n"
+                                                        "Do you want to save your changes?"),
+                                                     QMessageBox::Discard
+                                                     | QMessageBox::Cancel
+                                                     | QMessageBox::Save );
+        if (m_closeMessageBox == QMessageBox::Save) {
+            bool mainWindowDestructed = true;
+            m_principalWidget->saveFile(mainWindowDestructed);
+            event->accept();
+        }
+        else if (m_closeMessageBox == QMessageBox::Discard) {
+            event->accept();
+        }else {
+            event->ignore();
+        }
     }
-    else if (m_closeMessageBox == QMessageBox::Discard) {
+    else {
         event->accept();
-    }else {
-        event->ignore();
     }
 }

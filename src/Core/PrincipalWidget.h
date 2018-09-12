@@ -27,18 +27,20 @@
 
 #include <QWidget>
 #include <QLayout>
+#include "../Editor/Editor.h"
 
-class Editor;
+//class Editor;
 
 class PrincipalWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit PrincipalWidget(QWidget *parent = nullptr);
     void saveFile(bool test);
+    Editor *editor = nullptr;
 
 private:
-    Editor *m_editor = nullptr;
     QHBoxLayout *m_layout = nullptr;
 
 };

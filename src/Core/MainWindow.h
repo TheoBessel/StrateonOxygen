@@ -26,7 +26,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QMessageBox>
 
 
 class PrincipalWidget;

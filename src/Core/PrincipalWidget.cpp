@@ -30,16 +30,16 @@
 PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
 {
     m_layout = new QHBoxLayout(this);
-    m_editor = new Editor(this);
+    editor = new Editor(this);
 
     setLayout(m_layout);
     m_layout->setContentsMargins(0, 0, 0, 0);
-    m_layout->addWidget(m_editor);
+    m_layout->addWidget(editor);
 }
 
 void PrincipalWidget::saveFile(bool test)
 { if (test){
-        QString EditorContent = m_editor->toPlainText();
+        QString EditorContent = editor->toPlainText();
         QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "Sans titre 1.txt");
         QFile File(FileName);
         if (File.open(QIODevice::WriteOnly))
