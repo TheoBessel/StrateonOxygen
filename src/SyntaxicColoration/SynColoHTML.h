@@ -22,32 +22,43 @@
     * SOFTWARE.
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SYNCOLOHTML_H
+#define SYNCOLOHTML_H
 
-#include <QMainWindow>
+#include <QSyntaxHighlighter>
+#include <QTextCharFormat>
+#include <QRegularExpression>
 
+class QTextDocument;
 
-class PrincipalWidget;
-class QCloseEvent;
-
-class MainWindow : public QMainWindow
+class HtmlHighlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    HtmlHighlighter(QTextDocument *parent = 0);
+
+protected:
+    void highlightBlock(const QString &text) override;
 
 private:
-    PrincipalWidget *m_principalWidget = nullptr;
-    QMenuBar *m_menuBar = nullptr;
-    QStatusBar *m_statusBar = nullptr;
-    QAction *saveAction = nullptr;
-    void showCaractersNumber();
+    struct HighlightingRule
+    {
+        QRegularExpression pattern;
+        QTextCharFormat format;
+    };
+    QVector<HighlightingRule> highlightingRules;
 
-protected:    
-    void closeEvent(QCloseEvent *event) override;
+    QRegularExpression commentStartExpression;
+    QRegularExpression commentEndExpression;
 
+    QTextCharFormat normalFormat;
+    QTextCharFormat multiLineCommentFormat;
+    QTextCharFormat quotationFormat;
+    QTextCharFormat doctypeFormat;
+    QTextCharFormat baliseFormat;
+    QTextCharFormat equalityFormat;
 };
 
-#endif // MAINWINDOW_H
+
+#endif // SYNTAXICCOLORATION_H

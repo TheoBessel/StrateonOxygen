@@ -28,17 +28,32 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QStatusBar>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     m_menuBar = new QMenuBar(this);
+    m_statusBar = new QStatusBar(this);
+    setStatusBar(m_statusBar);
     QMenu *Edit = m_menuBar->addMenu("File");
     saveAction = Edit->addAction("SaveFile");
-
+    m_statusBar->showMessage("Ready");
+    m_statusBar->setStyleSheet("background: rgb(48,61,74); color: white; border-color: rgb(48,61,74);");
     m_principalWidget = new PrincipalWidget(this);
-    connect(saveAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::saveFile);
     setCentralWidget(m_principalWidget);
+    connect(saveAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::saveFile);
+    connect(m_principalWidget->editor, &QPlainTextEdit::textChanged, this, &MainWindow::showCaractersNumber);
+}
 
+void MainWindow::showCaractersNumber(){
+    QString editorContent{m_principalWidget->editor->toPlainText()};
+    editorContent.remove(" ");
+    editorContent.remove("\n");
+    editorContent.remove("\t");
+
+    int caracters{editorContent.size()};
+    QString caractersNumber = QString::number(caracters);
+    m_statusBar->showMessage("Number of caracters : " + caractersNumber);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -47,15 +62,13 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     trimmedEditor.remove("\n");
     trimmedEditor.remove("\t");
 
-
-
     if (!trimmedEditor.isEmpty()){
         int m_closeMessageBox = QMessageBox::warning(this, tr("My Application"),
                                                      tr("The document has been modified.\n"
                                                         "Do you want to save your changes?"),
-                                                     QMessageBox::Discard
-                                                     | QMessageBox::Cancel
-                                                     | QMessageBox::Save );
+                                                     QMessageBox::Discard|
+                                                     QMessageBox::Cancel|
+                                                     QMessageBox::Save );
         if (m_closeMessageBox == QMessageBox::Save) {
             bool mainWindowDestructed = true;
             m_principalWidget->saveFile(mainWindowDestructed);

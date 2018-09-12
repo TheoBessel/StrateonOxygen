@@ -31,12 +31,12 @@
 
 class QTextDocument;
 
-class Highlighter : public QSyntaxHighlighter
+class CppHighlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 
 public:
-    Highlighter(QTextDocument *parent = 0);
+    CppHighlighter(QTextDocument *parent = 0);
 
 protected:
     void highlightBlock(const QString &text) override;

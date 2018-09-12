@@ -26,11 +26,13 @@ HEADERS += \
     SyntaxicColoration/SynColoCCpp.h \
     Editor/Editor.h \
     Core/MainWindow.h \
-    Core/PrincipalWidget.h
+    Core/PrincipalWidget.h \
+    SyntaxicColoration/SynColoHTML.h
 
 SOURCES += \
     main.cpp \
     SyntaxicColoration/SynColoCCpp.cpp \
     Editor/Editor.cpp \
     Core/MainWindow.cpp \
-    Core/PrincipalWidget.cpp
+    Core/PrincipalWidget.cpp \
+    SyntaxicColoration/SynColoHTML.cpp

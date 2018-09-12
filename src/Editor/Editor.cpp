@@ -26,6 +26,7 @@
 
 #include "Editor/Editor.h"
 #include "../SyntaxicColoration/SynColoCCpp.h"
+#include "../SyntaxicColoration/SynColoHTML.h"
 
 Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
 {
@@ -39,7 +40,7 @@ Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
     HighlightCurrentLine();
     this->setStyleSheet("background-color: rgb(48,61,74);");
 
-    highlighter = new Highlighter(this->document());
+    highlighter = new CppHighlighter(this->document());
 
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     verticalScrollBar()->hide();

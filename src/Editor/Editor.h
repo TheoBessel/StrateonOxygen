@@ -27,7 +27,8 @@
 
 #include <QPlainTextEdit>
 
-class Highlighter;
+class HtmlHighlighter;
+class CppHighlighter;
 class QPaintEvent;
 class QResizeEvent;
 class QSize;
@@ -59,7 +60,7 @@ private slots:
 
 private:
     QWidget *LineNumber = nullptr;
-    Highlighter *highlighter = nullptr;
+    CppHighlighter *highlighter = nullptr;
 };
 
 /* Line number Class */
