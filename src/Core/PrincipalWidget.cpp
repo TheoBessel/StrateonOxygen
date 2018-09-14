@@ -38,16 +38,25 @@ PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
 }
 
 void PrincipalWidget::saveFile(bool test)
-{ if (test){
-        QString EditorContent = editor->toPlainText();
-        QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "Sans titre 1.txt");
-        QFile File(FileName);
-        if (File.open(QIODevice::WriteOnly))
-        {
-            QTextStream out(&File);
-            out << EditorContent;
-            setWindowTitle("Strateon - " + FileName);
-        }
+{ if (test){}
+    QString EditorContent = editor->toPlainText();
+    QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "Sans titre 1.txt");
+    QFile File(FileName);
+    if (File.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&File);
+        out << EditorContent;
+        setWindowTitle("Strateon - " + FileName);
     }
 }
 
+void PrincipalWidget::openFile(bool test)
+{ if (test){}
+    QString FileName = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString());
+    QFile File(FileName);
+    if (File.open(QIODevice::ReadOnly))
+    {
+        editor->document()->setPlainText(File.readAll());
+        setWindowTitle(FileName + " - Strateon V1 - Argon ");
+    }
+}

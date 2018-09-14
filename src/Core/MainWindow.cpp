@@ -29,31 +29,64 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QStatusBar>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     m_menuBar = new QMenuBar(this);
     m_statusBar = new QStatusBar(this);
+
+    statusMessageCharaters = new QLabel(this);
+    statusMessageCursor = new QLabel(this);
+    statusMessageWordNumber = new QLabel(this);
+    m_statusBar->addWidget(statusMessageCharaters);
+    m_statusBar->addWidget(statusMessageCursor);
+    m_statusBar->addWidget(statusMessageWordNumber);
     setStatusBar(m_statusBar);
     QMenu *Edit = m_menuBar->addMenu("File");
     saveAction = Edit->addAction("SaveFile");
+    openAction = Edit->addAction("OpenFile");
     m_statusBar->showMessage("Ready");
     m_statusBar->setStyleSheet("background: rgb(48,61,74); color: white; border-color: rgb(48,61,74);");
     m_principalWidget = new PrincipalWidget(this);
     setCentralWidget(m_principalWidget);
+    m_statusBar->setSizeGripEnabled(true);
+    statusMessageCursor->setText("  Cursor Position :  pos : x / y  |  " );
     connect(saveAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::saveFile);
-    connect(m_principalWidget->editor, &QPlainTextEdit::textChanged, this, &MainWindow::showCaractersNumber);
+    connect(openAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::openFile);
+    connect(m_principalWidget->editor, &QPlainTextEdit::textChanged, this, &MainWindow::showCharactersNumber);
+    connect(m_principalWidget->editor, &QPlainTextEdit::cursorPositionChanged, this, &MainWindow::showCursorPosition);
+    connect(m_principalWidget->editor, &QPlainTextEdit::textChanged, this, &MainWindow::showWordNumber);
 }
 
-void MainWindow::showCaractersNumber(){
+void MainWindow::showCharactersNumber(){
     QString editorContent{m_principalWidget->editor->toPlainText()};
     editorContent.remove(" ");
     editorContent.remove("\n");
     editorContent.remove("\t");
 
-    int caracters{editorContent.size()};
-    QString caractersNumber = QString::number(caracters);
-    m_statusBar->showMessage("Number of caracters : " + caractersNumber);
+    int characters{editorContent.size()};
+    QString charactersNumber = QString::number(characters);
+
+    statusMessageCharaters->setText("   Number of caracters : " + charactersNumber + "  |  ");
+}
+
+void MainWindow::showCursorPosition(){
+    int xCursorPos = {m_principalWidget->editor->textCursor().blockNumber() + 1};
+    int yCursorPos = {m_principalWidget->editor->textCursor().positionInBlock() + 1};
+
+    QString xCursorPosition = QString::number(xCursorPos);
+    QString yCursorPosition = QString::number(yCursorPos);
+
+    statusMessageCursor->setText("  Cursor Position :  pos : " + xCursorPosition + " / " + yCursorPosition + "  |  " );
+
+}
+
+void MainWindow::showWordNumber(){
+
+    int wordCounter = m_principalWidget->editor->toPlainText().split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
+    QString wordNumber = QString::number(wordCounter);
+    statusMessageWordNumber->setText("  Word Number " + wordNumber + "  |  " );
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -66,8 +99,8 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         int m_closeMessageBox = QMessageBox::warning(this, tr("My Application"),
                                                      tr("The document has been modified.\n"
                                                         "Do you want to save your changes?"),
-                                                     QMessageBox::Discard|
-                                                     QMessageBox::Cancel|
+                                                     QMessageBox::Discard |
+                                                     QMessageBox::Cancel |
                                                      QMessageBox::Save );
         if (m_closeMessageBox == QMessageBox::Save) {
             bool mainWindowDestructed = true;

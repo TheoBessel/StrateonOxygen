@@ -37,9 +37,9 @@ class PrincipalWidget : public QWidget
 
 public:
     explicit PrincipalWidget(QWidget *parent = nullptr);
-    void saveFile(bool test);
     Editor *editor = nullptr;
-
+    void saveFile(bool test);
+    void openFile(bool test);
 private:
     QHBoxLayout *m_layout = nullptr;
 

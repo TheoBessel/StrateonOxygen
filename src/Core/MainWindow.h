@@ -27,7 +27,7 @@
 
 #include <QMainWindow>
 
-
+class QLabel;
 class PrincipalWidget;
 class QCloseEvent;
 
@@ -43,7 +43,20 @@ private:
     QMenuBar *m_menuBar = nullptr;
     QStatusBar *m_statusBar = nullptr;
     QAction *saveAction = nullptr;
-    void showCaractersNumber();
+    QAction *openAction = nullptr;
+    QLabel *statusMessageCharaters = nullptr;
+    QLabel *statusMessageCursor = nullptr;
+    QLabel *statusMessageWordNumber = nullptr;
+
+
+    int xpos = {0};
+    int ypos = {1};
+    int xCursorOldPos = {0};
+    int yCursorOldPos = {0};
+
+    void showCharactersNumber();
+    void showCursorPosition();
+    void showWordNumber();
 
 protected:    
     void closeEvent(QCloseEvent *event) override;
