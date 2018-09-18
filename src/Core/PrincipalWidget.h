@@ -29,7 +29,9 @@
 #include <QLayout>
 #include "../Editor/Editor.h"
 
-//class Editor;
+class QTreeView;
+class QTreeWidgetItem;
+class QTreeWidget;
 
 class PrincipalWidget : public QWidget
 {
@@ -37,6 +39,8 @@ class PrincipalWidget : public QWidget
 
 public:
     explicit PrincipalWidget(QWidget *parent = nullptr);
+    QTreeWidget *fileView;
+    QList<QTreeWidgetItem *> items;
     Editor *editor = nullptr;
     void saveFile(bool test);
     void openFile(bool test);

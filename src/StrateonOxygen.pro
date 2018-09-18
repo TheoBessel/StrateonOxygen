@@ -22,12 +22,15 @@
 
 QT += widgets
 
+#CONFIG += console
+
 HEADERS += \
     SyntaxicColoration/SynColoCCpp.h \
     Editor/Editor.h \
     Core/MainWindow.h \
     Core/PrincipalWidget.h \
-    SyntaxicColoration/SynColoHTML.h
+    SyntaxicColoration/SynColoHTML.h \
+    AutoCompleter/AutoCompleter.h
 
 SOURCES += \
     main.cpp \
@@ -35,4 +38,5 @@ SOURCES += \
     Editor/Editor.cpp \
     Core/MainWindow.cpp \
     Core/PrincipalWidget.cpp \
-    SyntaxicColoration/SynColoHTML.cpp
+    SyntaxicColoration/SynColoHTML.cpp \
+    AutoCompleter/AutoCompleter.cpp

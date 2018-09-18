@@ -48,12 +48,6 @@ private:
     QLabel *statusMessageCursor = nullptr;
     QLabel *statusMessageWordNumber = nullptr;
 
-
-    int xpos = {0};
-    int ypos = {1};
-    int xCursorOldPos = {0};
-    int yCursorOldPos = {0};
-
     void showCharactersNumber();
     void showCursorPosition();
     void showWordNumber();

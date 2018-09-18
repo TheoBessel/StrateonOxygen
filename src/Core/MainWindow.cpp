@@ -33,9 +33,9 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    qDebug("MainWindow Created");
     m_menuBar = new QMenuBar(this);
     m_statusBar = new QStatusBar(this);
-
     statusMessageCharaters = new QLabel(this);
     statusMessageCursor = new QLabel(this);
     statusMessageWordNumber = new QLabel(this);
@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_statusBar->showMessage("Ready");
     m_statusBar->setStyleSheet("background: rgb(48,61,74); color: white; border-color: rgb(48,61,74);");
     m_principalWidget = new PrincipalWidget(this);
+    m_principalWidget->setMinimumSize(500, 460);
     setCentralWidget(m_principalWidget);
     m_statusBar->setSizeGripEnabled(true);
     statusMessageCursor->setText("  Cursor Position :  pos : x / y  |  " );

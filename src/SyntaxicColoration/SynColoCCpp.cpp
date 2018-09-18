@@ -30,7 +30,7 @@ CppHighlighter::CppHighlighter(QTextDocument *parent)
     HighlightingRule rule;
 
     normalFormat.setForeground(Qt::white);
-    rule.pattern = QRegularExpression("[[:print:]]");
+    rule.pattern = QRegularExpression(".");
     rule.format = normalFormat;
     highlightingRules.append(rule);
 
