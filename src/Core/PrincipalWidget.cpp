@@ -35,8 +35,7 @@ PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
     editor = new Editor(this);
     fileView = new QTreeWidget(this);
     fileView->setColumnCount(1);
-
-    fileView->setStyleSheet("background: rgb(48,61,74);");
+    fileView->setStyleSheet("color: white; background: rgb(48,61,74);");
     //TODO : add QFileSystemModel(with headers and c++ files) to filesView
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0, 0, 0, 0);
@@ -45,12 +44,14 @@ PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
     setLayout(m_layout);
 }
 
+
 void PrincipalWidget::saveFile(bool test)
 { if (test){}
     QString EditorContent = editor->toPlainText();
-    QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "Sans titre 1.txt");
+    QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "sansTitre.txt");
+    QString Name = QFileInfo(FileName).fileName();
     QFile File(FileName);
-    items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(FileName))));
+    items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(Name))));
     fileView->insertTopLevelItems(0, items);
     if (File.open(QIODevice::WriteOnly))
     {
@@ -63,8 +64,9 @@ void PrincipalWidget::saveFile(bool test)
 void PrincipalWidget::openFile(bool test)
 { if (test){}
     QString FileName = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString());
+    QString Name = QFileInfo(FileName).fileName();
     QFile File(FileName);
-    items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(FileName))));
+    items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(Name))));
     fileView->insertTopLevelItems(0, items);
     if (File.open(QIODevice::ReadOnly))
     {

@@ -34,6 +34,17 @@ CppHighlighter::CppHighlighter(QTextDocument *parent)
     rule.format = normalFormat;
     highlightingRules.append(rule);
 
+    classFormat.setFontWeight(QFont::Bold);
+    classFormat.setForeground(QColor(186,127,184));
+
+    QStringList classPattern;
+    classPattern << "\\bQ[A-Za-z]+\\b" << "[A-Za-z]+::" << "class +[A-Za-z]+" << "[A-Za-z]+ \\*";
+    foreach (const QString &pattern, classPattern) {
+        rule.pattern = QRegularExpression(pattern);
+        rule.format = classFormat;
+        highlightingRules.append(rule);
+    }
+
     keywordFormat.setForeground(QColor(68,130,187));
     keywordFormat.setFontWeight(QFont::Bold);
     QStringList keywordPatterns;
@@ -47,25 +58,25 @@ CppHighlighter::CppHighlighter(QTextDocument *parent)
                     << "\\btemplate\\b" << "\\btypedef\\b" << "\\btypename\\b"
                     << "\\bunion\\b" << "\\bunsigned\\b" << "\\bvirtual\\b"
                     << "\\bvoid\\b" << "\\bvolatile\\b" << "\\bbool\\b"
-                    << "cout" << "std" << "endl";
+                    << "cout" << "std" << "endl" << "new" << "nullptr";
     foreach (const QString &pattern, keywordPatterns) {
         rule.pattern = QRegularExpression(pattern);
         rule.format = keywordFormat;
         highlightingRules.append(rule);
     }
 
-    classFormat.setFontWeight(QFont::Bold);
-    classFormat.setForeground(QColor(186,127,184));
 
-    QStringList classPattern;
-    classPattern << "\\bQ[A-Za-z]+\\b" << "[A-Za-z]+::";
-    foreach (const QString &pattern, classPattern) {
+
+    objectFormat.setFontWeight(QFont::Bold);
+    objectFormat.setForeground(QColor(206,134,150));
+
+    QStringList objectPattern;
+    objectPattern << "\\*+[A-Za-z]+" << " \\*+[A-Za-z]" << " \\*+>+[A-Za-z]+" << " \\*+>+ [A-Za-z]+" << " \\*+[A-Za-z]+_+[A-Za-z]+";
+    foreach (const QString &pattern, objectPattern) {
         rule.pattern = QRegularExpression(pattern);
-        rule.format = classFormat;
+        rule.format = objectFormat;
         highlightingRules.append(rule);
     }
-
-
 
     rule.pattern = QRegularExpression("\\bQ[A-Za-z]+\\b");
     rule.format = classFormat;
@@ -80,7 +91,7 @@ CppHighlighter::CppHighlighter(QTextDocument *parent)
     includeFormat.setForeground(QColor(192,100,108));
     QStringList includePattern;
     includePattern << "#include<[A-Za-z]+>" << "#include <[A-Za-z]+>" << R"*(#include "[A-Za-z]+.+[A-Za-z]")*" << R"*(#include"[A-Za-z]+.+[A-Za-z]")*" << "#define +[A-Za-z]+_+[A-Za-z]+"
-                   << "#ifndef +[A-Za-z]+_+[A-Za-z]+" << "#endif"  << R"*(#include "..+/+[A-Za-z]+.+[A-Za-z]")*" << R"*(#include"..+/+[A-Za-z]+.+[A-Za-z]")*";
+                   << "#ifndef +[A-Za-z]+_+[A-Za-z]+" << "#endif"  << R"*(#include "..+/+[A-Za-z]+.+[A-Za-z]")*" << R"*(#include"..+/+[A-Za-z]+.+[A-Za-z]")*" << "Q_OBJECT";
     foreach (const QString &pattern, includePattern) {
         rule.pattern = QRegularExpression(pattern);
         rule.format = includeFormat;

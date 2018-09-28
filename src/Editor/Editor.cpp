@@ -48,6 +48,24 @@ Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     horizontalScrollBar()->hide();
     horizontalScrollBar()->resize(0, 0);
+    installEventFilter(this);
+}
+
+bool Editor::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_QuoteDbl) {
+            textCursor().insertText(R"*(" ")*");
+            return true;
+        }
+        if (keyEvent->key() == Qt::Key_ParenLeft) {
+            textCursor().insertText(R"*(( ))*");
+            return true;
+        }
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 int Editor::LineNumberWidth()

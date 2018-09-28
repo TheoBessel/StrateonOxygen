@@ -33,6 +33,7 @@ class QPaintEvent;
 class QResizeEvent;
 class QSize;
 class QWidget;
+//class std::map;
 
 class LineNumberClass;
 
@@ -44,12 +45,12 @@ class Editor : public QPlainTextEdit
 
 public:
     Editor(QWidget *parent = 0);
-
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int LineNumberWidth();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
     /*Line number updating*/

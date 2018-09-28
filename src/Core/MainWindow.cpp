@@ -30,9 +30,11 @@
 #include <QCloseEvent>
 #include <QStatusBar>
 #include <QLabel>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    setWindowIcon(QIcon(":/logo/logo.png"));
     qDebug("MainWindow Created");
     m_menuBar = new QMenuBar(this);
     m_statusBar = new QStatusBar(this);
@@ -87,8 +89,9 @@ void MainWindow::showWordNumber(){
 
     int wordCounter = m_principalWidget->editor->toPlainText().split(QRegExp("(\\s|\\n|\\r)+"), QString::SkipEmptyParts).count();
     QString wordNumber = QString::number(wordCounter);
-    statusMessageWordNumber->setText("  Word Number " + wordNumber + "  |  " );
+    statusMessageWordNumber->setText("  Word Number " + wordNumber + "  |  ");
 }
+
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     QString trimmedEditor{m_principalWidget->editor->toPlainText()};

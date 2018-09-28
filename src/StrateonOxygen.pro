@@ -40,3 +40,6 @@ SOURCES += \
     Core/PrincipalWidget.cpp \
     SyntaxicColoration/SynColoHTML.cpp \
     AutoCompleter/AutoCompleter.cpp
+
+RESOURCES += \
+    Ressouces/ressources.qrc

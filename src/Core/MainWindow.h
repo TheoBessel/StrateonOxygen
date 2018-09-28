@@ -52,7 +52,8 @@ private:
     void showCursorPosition();
     void showWordNumber();
 
-protected:    
+
+protected:
     void closeEvent(QCloseEvent *event) override;
 
 };
