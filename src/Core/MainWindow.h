@@ -30,6 +30,9 @@
 class QLabel;
 class PrincipalWidget;
 class QCloseEvent;
+class QComboBox;
+class CppHighlighter;
+class HtmlHighlighter;
 
 class MainWindow : public QMainWindow
 {
@@ -47,15 +50,23 @@ private:
     QLabel *statusMessageCharaters = nullptr;
     QLabel *statusMessageCursor = nullptr;
     QLabel *statusMessageWordNumber = nullptr;
+    QComboBox *highlighterBox = nullptr;
+    CppHighlighter *highlighter = nullptr;
+    HtmlHighlighter *htmlHighlighter = nullptr;
 
     void showCharactersNumber();
     void showCursorPosition();
     void showWordNumber();
-
+    void changeCurentHighligter(QString index);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 };
+
+namespace Cocoa
+{
+void changeTitleBarColor(WId winId, double red, double green, double blue);
+}
 
 #endif // MAINWINDOW_H

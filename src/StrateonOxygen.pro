@@ -24,22 +24,27 @@ QT += widgets
 
 #CONFIG += console
 
+LIBS += -framework AppKit
+
 HEADERS += \
     SyntaxicColoration/SynColoCCpp.h \
     Editor/Editor.h \
     Core/MainWindow.h \
     Core/PrincipalWidget.h \
     SyntaxicColoration/SynColoHTML.h \
-    AutoCompleter/AutoCompleter.h
+    Editor/FileGestion.h
 
 SOURCES += \
-    main.cpp \
+    #main.cpp \
     SyntaxicColoration/SynColoCCpp.cpp \
     Editor/Editor.cpp \
     Core/MainWindow.cpp \
     Core/PrincipalWidget.cpp \
     SyntaxicColoration/SynColoHTML.cpp \
-    AutoCompleter/AutoCompleter.cpp
+    Editor/FileGestion.cpp \
+
+
+OBJECTIVE_SOURCES += main.mm
 
 RESOURCES += \
     Ressouces/ressources.qrc

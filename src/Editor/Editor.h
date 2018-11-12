@@ -47,10 +47,13 @@ public:
     Editor(QWidget *parent = 0);
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int LineNumberWidth();
+    QSet<int> pressedKeys;
+    void setTabSize(int tabSize);
+    void createSnippets();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private slots:
     /*Line number updating*/
@@ -62,6 +65,9 @@ private slots:
 private:
     QWidget *LineNumber = nullptr;
     CppHighlighter *highlighter = nullptr;
+    HtmlHighlighter *htmlHighlighter = nullptr;
+    std::map<std::string, QString> m_snippets;
+
 };
 
 /* Line number Class */

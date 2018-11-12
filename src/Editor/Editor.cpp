@@ -25,22 +25,20 @@
 #include <QtWidgets>
 
 #include "Editor/Editor.h"
+#include "../Core/MainWindow.h"
 #include "../SyntaxicColoration/SynColoCCpp.h"
 #include "../SyntaxicColoration/SynColoHTML.h"
 
 Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
 {
     LineNumber = new LineNumberClass(this);
-
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(UpdateLineNumberWidth(int)));
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(UpdateLineNumber(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(HighlightCurrentLine()));
 
     UpdateLineNumberWidth(0);
     HighlightCurrentLine();
-    this->setStyleSheet("background-color: rgb(48,61,74);");
-
-    highlighter = new CppHighlighter(this->document());
+    this->setStyleSheet("background: rgb(48,61,74); border: none;");
 
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     verticalScrollBar()->hide();
@@ -49,22 +47,101 @@ Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
     horizontalScrollBar()->hide();
     horizontalScrollBar()->resize(0, 0);
     installEventFilter(this);
+
+    createSnippets();
+    setTabSize(4);
 }
+
+void Editor::setTabSize(int tabSize) {
+    QFont font;
+    QFontMetrics metrics(font);
+    setTabStopWidth(tabSize * metrics.width(' '));
+}
+
+void Editor::createSnippets() {
+
+    //html
+    QString html5 = "<!doctype html>\n\n<html lang=\"fr\">\n\t<head>\n\t\t <meta charset=\"utf-8\">\n\t\t <title>Titre</title>\n\t\t </head>\n\t\t<body>\n\n\t\t</body>\n</html>";
+    QString input = "<input type=\"text\" name=\"\" />";
+    QString strong = "<strong></strong>";
+    QString ul = "<ul>\n\t<li></li>\n</ul>";
+    QString img = "<img src=\"\" alt=\"\" />";
+    QString link = "<a href=\"\"></a>";
+    QString italic = "<em></em>";
+    QString css = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/main.css\" />";
+    QString js = "<script type=\"text/javascript\" src=\"js/main.js\"></script>";
+    QString textarea = "<textarea name=\"\" cols=\"30\" rows=\"10\"></textarea>";
+    QString select = "<select>\n\t<option value=\"\"></option>\n</select>";
+    QString form = "<form action=\"#\" method=\"post\"></form>";
+    m_snippets["html"] = html5;
+    m_snippets["input"] = input;
+    m_snippets["strong"] = strong;
+    m_snippets["ul"] = ul;
+    m_snippets["img"] = img;
+    m_snippets["a"] = link;
+    m_snippets["em"] = italic;
+    m_snippets["css"] = css;
+    m_snippets["js"] = js;
+    m_snippets["texta"] = textarea;
+    m_snippets["select"] = select;
+    m_snippets["form"] = form;
+
+    //cpp
+
+    QString cpp = "int main()  //main function\n {\n\t\t return 0;\n}";
+    m_snippets["cpp"] = cpp;
+
+}
+
 
 bool Editor::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress)
     {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_QuoteDbl) {
+        pressedKeys += ((QKeyEvent*)event)->key();
+        QTextCursor cursor = textCursor();
+        cursor.select(QTextCursor::WordUnderCursor);
+        QString word = cursor.selectedText();
+
+        if (pressedKeys.contains(Qt::Key_QuoteDbl)) {
             textCursor().insertText(R"*(" ")*");
             return true;
         }
-        if (keyEvent->key() == Qt::Key_ParenLeft) {
+        if (pressedKeys.contains(Qt::Key_ParenLeft) && !pressedKeys.contains(Qt::Key_Alt)) {
             textCursor().insertText(R"*(( ))*");
             return true;
         }
+        if (pressedKeys.contains(Qt::Key_Alt) && pressedKeys.contains(Qt::Key_ParenLeft)) {
+            textCursor().insertText(R"*({)*");
+            textCursor().insertText("\n");
+            textCursor().insertText("\n");
+            textCursor().insertText(R"*(})*");
+            return true;
+        }
+
+        if(pressedKeys.contains(Qt::Key_Tab)) {
+            if(word.toStdString() == "cpp"){
+                highlighter = new CppHighlighter(this->document());
+                delete htmlHighlighter;
+            }
+            if(word.toStdString() == "html"){
+                htmlHighlighter = new HtmlHighlighter(this->document());
+                delete highlighter;
+            }
+            if(m_snippets.find(word.toStdString()) != m_snippets.end()) {
+                cursor.removeSelectedText();
+                cursor.insertText(m_snippets.find(word.toStdString())->second);
+            }
+
+        }
+
     }
+
+    if (event->type() == QEvent::KeyRelease)
+    {
+        pressedKeys -= ((QKeyEvent*)event)->key();
+    }
+
     return QObject::eventFilter(obj, event);
 }
 

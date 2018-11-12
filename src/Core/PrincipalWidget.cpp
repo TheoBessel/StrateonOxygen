@@ -24,25 +24,61 @@
 
 #include "PrincipalWidget.h"
 #include "../Editor/Editor.h"
+#include "../Editor/filegestion.h"
+#include "MainWindow.h"
 #include <QFileDialog>
 #include <QTextStream>
-#include <QTreeView>
-#include <QTreeWidget>
+#include "../SyntaxicColoration/SynColoCCpp.h"
+#include "../SyntaxicColoration/SynColoHTML.h"
+#include <QHBoxLayout>
+#include <QFile>
+#include <QTreeWidgetItem>
+#include <QPushButton>
+#include <iostream>
+
+
 
 PrincipalWidget::PrincipalWidget(QWidget *parent) : QWidget(parent)
 {
     m_layout = new QHBoxLayout(this);
     editor = new Editor(this);
-    fileView = new QTreeWidget(this);
-    fileView->setColumnCount(1);
-    fileView->setStyleSheet("color: white; background: rgb(48,61,74);");
-    //TODO : add QFileSystemModel(with headers and c++ files) to filesView
+    m_manager = new FileGestion(this);
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0, 0, 0, 0);
-    m_layout->addWidget(fileView, 20);
+    m_layout->addWidget(m_manager, 20);
     m_layout->addWidget(editor, 80);
     setLayout(m_layout);
+    connect(m_manager, &FileGestion::itemClicked, this, &PrincipalWidget::openFileFromTreeView);
 }
+
+/*void PrincipalWidget::saveFile(bool test)
+{ if (test){}
+    QString EditorContent = editor->toPlainText();
+    QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "sansTitre.txt");
+    QString Name = QFileInfo(FileName).fileName();
+    QFile File(FileName);
+    //items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(Name))));
+    //fileView->insertTopLevelItems(0, items);
+    if (File.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&File);
+        out << EditorContent;
+    }
+}*/
+
+void PrincipalWidget::openFile(bool test)
+{ if (test){}
+    QString FileName = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString());
+    QString Name = QFileInfo(FileName).fileName();
+    QFile File(FileName);
+    //items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(Name))));
+    //fileView->insertTopLevelItems(0, items);
+    if (File.open(QIODevice::ReadOnly))
+    {
+        editor->document()->setPlainText(File.readAll());
+    }
+}
+
 
 
 void PrincipalWidget::saveFile(bool test)
@@ -51,26 +87,37 @@ void PrincipalWidget::saveFile(bool test)
     QString FileName = QFileDialog::getSaveFileName(this, "Enregistrer...", "sansTitre.txt");
     QString Name = QFileInfo(FileName).fileName();
     QFile File(FileName);
-    items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(Name))));
-    fileView->insertTopLevelItems(0, items);
     if (File.open(QIODevice::WriteOnly))
     {
-        QTextStream out(&File);
-        out << EditorContent;
-        setWindowTitle("Strateon - " + FileName);
+         QTextStream out(&File);
+         out << EditorContent;
+         QString row = QString::number(i);
+
+         std::cout << i << std::endl;
+
+         items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(row)));
+         items.at(i)->setData(i, i, FileName);
+         QString text = items.at(i)->data(i,i).toString();
+         std::cout << i << std::endl;
+         std::cout << text.toStdString() << std::endl;
+         m_manager->insertTopLevelItems(i, items);
+         i++;
     }
 }
 
-void PrincipalWidget::openFile(bool test)
-{ if (test){}
-    QString FileName = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString());
-    QString Name = QFileInfo(FileName).fileName();
-    QFile File(FileName);
-    items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(Name))));
-    fileView->insertTopLevelItems(0, items);
+void PrincipalWidget::openFileFromTreeView(QTreeWidgetItem *treeItem, int row)
+{
+    std::cout << row << std::endl;
+    std::cout << treeItem->text(row).toInt() << std::endl;
+    QString text = treeItem->data(treeItem->text(row).toInt(), treeItem->text(row).toInt()).toString();
+    QFile File(text);
     if (File.open(QIODevice::ReadOnly))
     {
         editor->document()->setPlainText(File.readAll());
-        setWindowTitle(FileName + " - Strateon V1 - Argon ");
     }
 }
+
+
+
+
+

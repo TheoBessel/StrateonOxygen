@@ -27,8 +27,10 @@
 
 #include <QWidget>
 #include <QLayout>
+#include <QFileDialog>
 #include "../Editor/Editor.h"
 
+class FileGestion;
 class QTreeView;
 class QTreeWidgetItem;
 class QTreeWidget;
@@ -40,10 +42,15 @@ class PrincipalWidget : public QWidget
 public:
     explicit PrincipalWidget(QWidget *parent = nullptr);
     QTreeWidget *fileView;
-    QList<QTreeWidgetItem *> items;
+    QList<QTreeWidgetItem*> items;
     Editor *editor = nullptr;
+    FileGestion *m_manager;
     void saveFile(bool test);
     void openFile(bool test);
+    void setCurentFile(/*QTreeWidgetItem newTreeView, QTreeWidgetItem oldTreeView*/);
+    void openFileFromTreeView(QTreeWidgetItem *treeItem, int row);
+    int i{0};
+
 private:
     QHBoxLayout *m_layout = nullptr;
 
