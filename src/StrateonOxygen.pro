@@ -32,19 +32,24 @@ HEADERS += \
     Core/MainWindow.h \
     Core/PrincipalWidget.h \
     SyntaxicColoration/SynColoHTML.h \
-    Editor/FileGestion.h
+    Editor/FileGestion.h \
+    Core/centraltabwidget.h
 
 SOURCES += \
     #main.cpp \
     SyntaxicColoration/SynColoCCpp.cpp \
     Editor/Editor.cpp \
-    Core/MainWindow.cpp \
     Core/PrincipalWidget.cpp \
     SyntaxicColoration/SynColoHTML.cpp \
     Editor/FileGestion.cpp \
+    Core/centraltabwidget.cpp \
+    Core/MainWindow.cpp \
+    changetitlebarcolor.mm
 
 
-OBJECTIVE_SOURCES += main.mm
+
+OBJECTIVE_SOURCES += \
+    main.mm
 
 RESOURCES += \
     Ressouces/ressources.qrc

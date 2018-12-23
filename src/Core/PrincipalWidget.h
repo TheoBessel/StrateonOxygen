@@ -34,6 +34,8 @@ class FileGestion;
 class QTreeView;
 class QTreeWidgetItem;
 class QTreeWidget;
+class QTabWidget;
+class CentralTabWidget;
 
 class PrincipalWidget : public QWidget
 {
@@ -41,19 +43,29 @@ class PrincipalWidget : public QWidget
 
 public:
     explicit PrincipalWidget(QWidget *parent = nullptr);
-    QTreeWidget *fileView;
+    QTreeWidget* fileView;
     QList<QTreeWidgetItem*> items;
-    Editor *editor = nullptr;
-    FileGestion *m_manager;
+    Editor* editor = nullptr;
+    FileGestion* m_manager;
+    void addNewTab();
     void saveFile(bool test);
     void openFile(bool test);
+    void closeTab(int index);
     void setCurentFile(/*QTreeWidgetItem newTreeView, QTreeWidgetItem oldTreeView*/);
-    void openFileFromTreeView(QTreeWidgetItem *treeItem, int row);
+    void openFileFromTreeView(QTreeWidgetItem* treeItem, int row);
     int i{0};
+    QTabWidget* m_tabWidget = nullptr;
+    QList<CentralTabWidget*> m_CentralTabWidget;
 
 private:
-    QHBoxLayout *m_layout = nullptr;
+    QHBoxLayout* m_layout = nullptr;
 
 };
+
+namespace Cocoa
+{
+void changeTitleBarColor(WId winId, double red, double green, double blue);
+}
+
 
 #endif // PRINCIPALWIDGET_H

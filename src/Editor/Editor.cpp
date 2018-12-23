@@ -36,9 +36,9 @@ Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(UpdateLineNumber(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(HighlightCurrentLine()));
 
-    UpdateLineNumberWidth(0);
+    UpdateLineNumberWidth(5);
     HighlightCurrentLine();
-    this->setStyleSheet("background: rgb(48,61,74); border: none;");
+    this->setStyleSheet("background: rgb(48,61,74); color: white; border: none;");
 
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     verticalScrollBar()->hide();
@@ -50,6 +50,12 @@ Editor::Editor(QWidget *parent) : QPlainTextEdit(parent)
 
     createSnippets();
     setTabSize(4);
+
+    QFont font = this->document()->defaultFont();
+    font.setFamily("Courier");
+    this->document()->setDefaultFont(font);
+
+
 }
 
 void Editor::setTabSize(int tabSize) {

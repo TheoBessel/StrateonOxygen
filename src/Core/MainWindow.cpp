@@ -35,9 +35,22 @@
 #include <iostream>
 #include <QComboBox>
 #include <QStyleFactory>
+#include "centraltabwidget.h"
+#include <QHBoxLayout>
+#include <QDockWidget>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+
+
+    QWidget* test = new QWidget();
+    QHBoxLayout* lay = new QHBoxLayout();
+    setStyleSheet("background: rgb(48,61,74); color: white;");
+    m_principalWidget = new PrincipalWidget(this);
+
+    lay->addWidget(m_principalWidget);
+    test->setLayout(lay);
+
     setWindowIcon(QIcon(":/logo/logo.png"));
     //qDebug("MainWindow Created");
     m_menuBar = new QMenuBar(this);
@@ -62,16 +75,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_statusBar->addWidget(highlighterBox);
     setStatusBar(m_statusBar);
     m_statusBar->setFixedHeight(30);
-    QMenu *Edit = m_menuBar->addMenu("File");
-    saveAction = Edit->addAction("SaveFile");
-    openAction = Edit->addAction("OpenFile");
+
+    QMenu *File = m_menuBar->addMenu("File");
+    saveAction = File->addAction("Save File");
+    openAction = File->addAction("Open File");
+    newTabAction = File->addAction("New Tab");
+
+
+
     m_statusBar->showMessage("Ready");
     m_statusBar->setStyleSheet("background: rgb(48,61,74); color: white; border-color: rgb(48,61,74);");
-    m_principalWidget = new PrincipalWidget(this);
     //m_principalWidget->setMinimumSize(710, 460);
-    setCentralWidget(m_principalWidget);
+
+
+    /*QDockWidget*dock = new QDockWidget(this);
+    dock->setWidget(test);
+    addDockWidget(Qt::TopDockWidgetArea, dock);*/
+    setCentralWidget(test);
+
+
     m_statusBar->setSizeGripEnabled(true);
     statusMessageCursor->setText("  Cursor Position :  pos : x / y  |  " );
+    connect(newTabAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::addNewTab);
     connect(saveAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::saveFile);
     connect(openAction, &QAction::triggered, m_principalWidget, &PrincipalWidget::openFile);
     connect(m_principalWidget->editor, &QPlainTextEdit::textChanged, this, &MainWindow::showCharactersNumber);
@@ -91,6 +116,7 @@ void MainWindow::changeCurentHighligter(QString index){
         delete highlighter;
     }
 }
+
 
 void MainWindow::showCharactersNumber(){
     QString editorContent{m_principalWidget->editor->toPlainText()};

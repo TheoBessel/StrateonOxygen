@@ -39,18 +39,20 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget* parent = nullptr);
 
 private:
-    PrincipalWidget *m_principalWidget = nullptr;
-    QMenuBar *m_menuBar = nullptr;
-    QStatusBar *m_statusBar = nullptr;
-    QAction *saveAction = nullptr;
-    QAction *openAction = nullptr;
-    QLabel *statusMessageCharaters = nullptr;
-    QLabel *statusMessageCursor = nullptr;
-    QLabel *statusMessageWordNumber = nullptr;
-    QComboBox *highlighterBox = nullptr;
+    PrincipalWidget* m_principalWidget = nullptr;
+    QMenuBar* m_menuBar = nullptr;
+    QStatusBar* m_statusBar = nullptr;
+    QAction* saveAction = nullptr;
+    QAction* openAction = nullptr;
+    QAction* newTabAction = nullptr;
+
+    QLabel* statusMessageCharaters = nullptr;
+    QLabel* statusMessageCursor = nullptr;
+    QLabel* statusMessageWordNumber = nullptr;
+    QComboBox* highlighterBox = nullptr;
     CppHighlighter *highlighter = nullptr;
     HtmlHighlighter *htmlHighlighter = nullptr;
 
@@ -58,15 +60,13 @@ private:
     void showCursorPosition();
     void showWordNumber();
     void changeCurentHighligter(QString index);
+    int i = 0;
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 };
 
-namespace Cocoa
-{
-void changeTitleBarColor(WId winId, double red, double green, double blue);
-}
+
 
 #endif // MAINWINDOW_H

@@ -76,20 +76,20 @@ class LineNumberClass : public QWidget
 {
 public:
     LineNumberClass(Editor *editor) : QWidget(editor) {
-        Editor = editor;
+        m_editor = editor;
     }
 
     QSize sizeHint() const override {
-        return QSize(Editor->LineNumberWidth(), 0);
+        return QSize(m_editor->LineNumberWidth(), 0);
     }
 
 protected:
     void paintEvent(QPaintEvent *event) override {
-        Editor->lineNumberAreaPaintEvent(event);
+        m_editor->lineNumberAreaPaintEvent(event);
     }
 
 private:
-    Editor *Editor;
+    Editor *m_editor;
 };
 
 
