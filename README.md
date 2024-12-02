@@ -1,5 +1,7 @@
 # StrateonOxygen
-Strateon is a polyvalent IDE, it will support lot's of programming languages
+Strateon is a small IDE project written in C++ using Qt5 I worked on while I was learning computer programming in high school.
+
+This project is no longer maintained.
 
 
 SNIPPETS DEMO :
