@@ -6,4 +6,4 @@ This project is no longer maintained.
 
 SNIPPETS DEMO :
 
-![test strateon](https://user-images.githubusercontent.com/43089275/46300830-fb866f00-c5a4-11e8-9047-977908612acd.gif)
+<img src="https://user-images.githubusercontent.com/43089275/46300830-fb866f00-c5a4-11e8-9047-977908612acd.gif" alt="test strateon" width="700"/>
